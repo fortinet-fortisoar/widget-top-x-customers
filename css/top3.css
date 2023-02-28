@@ -1,0 +1,26 @@
+.layer-border-left {
+    /* border-left: 4px solid rgba(66, 235, 245, 0.7); */
+    border-radius: 4px;
+    /* background: linear-gradient(90deg, rgba(32, 180, 189, 0.4) 0%, rgba(10, 31, 46, 0) 100%);     */
+    height: 80px;
+    width: 350px;
+    margin-top: 20px;
+    display: block;
+    margin-left: 10px;
+}
+
+.innder-div-text {
+    display: inherit;
+    width: 250px;
+}
+
+.inner-div-number {
+    display: inherit;
+}
+
+.inner-outer-div {
+    display: inline-block;
+    font-size: 25px;
+    padding-top: 24px;
+    padding-left: 10px;
+}

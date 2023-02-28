@@ -1,0 +1,19 @@
+<div class="widget widget-container chart">
+    <div class="display-flex-space-between margin-chart">
+        <div class="padding-right-0 padding-left-0 widget-dashboard-title-width"
+            data-ng-class="(page === 'dashboard' || page === 'reporting') ? 'widget-dashboard-title-width' : 'widget-title-width'">
+            <h5 class="margin-top-0 margin-bottom-0 text-overflow ng-binding">{{config.title}}</h5>
+        </div>
+        <div class="padding-right-0 padding-left-0"
+            data-ng-class="(page === 'dashboard' || page === 'reporting') ? 'widget-dashboard-actions-width' : 'widget-actions-width'">
+            <span class="fa btn widget-action-icon btn-sm pull-right" data-ng-click="collapsed = !collapsed"
+                data-ng-class="{'fa-caret-up': !collapsed, 'fa-caret-down': collapsed}"></span>
+        </div>
+    </div>
+    <div data-ng-hide="collapsed">
+        <div class="padding-left-lg padding-bottom-lg">
+            <div id="top3{{config.wid}}">
+            </div>
+        </div>
+    </div>
+</div>

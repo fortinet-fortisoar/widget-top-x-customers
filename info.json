@@ -1,0 +1,18 @@
+{
+    "name": "top3",
+    "title": "Top 3",
+    "subTitle": "Top 3 Widget",
+    "version": "1.0.0",
+    "metadata": {
+        "description": "",
+        "pages": [
+            "Dashboard"
+        ],
+        "certified": "No",
+        "publisher": "Community",
+        "compatibility": [
+            "7.3.1"
+        ]
+    },
+    "development": true
+}
