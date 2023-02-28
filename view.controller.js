@@ -4,9 +4,9 @@
         .module('cybersponse')
         .controller('top3100Ctrl', top3100Ctrl);
 
-    top3100Ctrl.$inject = ['$q','$scope', 'API', '$resource', 'Query', '$filter'];
+    top3100Ctrl.$inject = ['$q','$scope', 'API', '$resource', 'Query', '$filter', 'PagedCollection'];
 
-    function top3100Ctrl($q, $scope, API, $resource, Query, $filter) {
+    function top3100Ctrl($q, $scope, API, $resource, Query, $filter, PagedCollection) {
         //array of colours for the layers
         $scope.colors = [
             "border-left:4px solid rgba(66, 235, 245, 0.7);background: linear-gradient(90deg, rgba(32, 180, 189, 0.4) 0%, rgba(10, 31, 46, 0) 100%);",
@@ -14,7 +14,13 @@
             "border-left:4px solid rgba(65, 41, 203, 0.7); background: linear-gradient(90deg, rgba(45, 17, 209, 0.6) 0%, rgba(10, 31, 46, 0) 100%);"            
         ]
 
-        getTop3records();
+        function init(){
+            if($scope.config.moduleType==0)
+                getTop3records();
+            else
+                getRecordsFromCustomModule();
+        }
+        init();
 
         function getTop3records() {
             //building query
@@ -55,6 +61,20 @@
             });
 
         }
+
+        function getRecordsFromCustomModule(){
+            var filters = {
+                query: $scope.config.query
+              };
+            var pagedTotalData = new PagedCollection($scope.config.customModule, null, null);
+            pagedTotalData.loadByPost(filters).then(function () {
+                var data = pagedTotalData.fieldRows[0][$scope.config.customModuleField].value;
+
+                
+            })
+
+        }
+
         function getResourceData(resource, queryObject) {
             var defer = $q.defer();
             $resource(API.QUERY + resource).save(queryObject.getQueryModifiers(), queryObject.getQuery(true)).$promise.then(function (response) {

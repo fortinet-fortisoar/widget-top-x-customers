@@ -15,11 +15,13 @@
             <div data-cs-messages="editWidgetForm.title"></div>
         </div>
         <div>
-            <div data-ng-class="{ 'has-error': editWidgetForm.funnelModuleType.$invalid && editWidgetForm.funnelModuleType.$touched }">
+            <div
+                data-ng-class="{ 'has-error': editWidgetForm.funnelModuleType.$invalid && editWidgetForm.funnelModuleType.$touched }">
                 <label for="funnelModuleType" class="control-label">Select Module Type</label><span
                     class="text-danger">*</span>
                 <select name="funnelModuleType" id="funnelModuleType" class="form-control" style="width:30%"
-                    data-ng-options="key as value for (key, value) in moduleType.type" data-ng-model="config.moduleType" data-ng-change="onChangeModuleType()" required>
+                    data-ng-options="key as value for (key, value) in moduleType.type" data-ng-model="config.moduleType"
+                    data-ng-change="onChangeModuleType()" required>
                     <option value="">Select an Option</option>
                 </select>
             </div>
@@ -38,7 +40,7 @@
                         </select>
                     </div>
                     <div class="margin-top-md margin-bottom-md" data-ng-if="config.module !== undefined">
-                        <label class="control-label">Filter Record Which Contains The Data
+                        <label class="control-label">Filter Record
                             <span class="text-danger">*</span>
                         </label>
                         <div data-cs-conditional data-ng-if="config.fieldsArray.length > 0" data-fields="config.fields"
@@ -60,15 +62,46 @@
                     </div>
                 </div>
                 <div data-ng-if="config.moduleType  == 1">
-                    <div>
+                    <div data-ng-class="{ 'has-error': editWidgetForm.numberOfLayers.$invalid && editWidgetForm.numberOfLayers.$touched }">
                         <label for="numberOfLayers" class="control-label">
                             Select number of layers
                             <span class="text-danger">*</span>
                         </label>
                         <select name="numberOfLayers" id="numberOfLayers" class="form-control" style="width:30%"
-                        data-ng-options="layer for layer in layers" data-ng-model="config.numberOfLayers" required>
-                        <option value="">Select an Option</option>
+                            data-ng-options="layer for layer in layers" data-ng-model="config.numberOfLayers" required>
+                            <option value="">Select an Option</option>
                         </select>
+                    </div>
+                    <div>
+                        <div class="form-group" data-ng-if="modules"
+                            data-ng-class="{ 'has-error': editWidgetForm.customModule.$invalid && editWidgetForm.customModule.$touched }">
+                            <label for="customModule" class="control-label">Data Source
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select name="module" id="module" class="form-control"
+                                data-ng-options="module.type as module.name for module in modules"
+                                data-ng-model="config.module" data-ng-change="onModuleChange()" required>
+                                <option value="">Select an Option</option>
+                            </select>
+                        </div>
+                        <div class="margin-top-md margin-bottom-md" data-ng-if="config.module !== undefined">
+                            <label class="control-label">Filter Record Which Contains Data
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div data-cs-conditional data-ng-if="config.fieldsArray.length > 0"
+                                data-fields="config.fields" data-reset-field="config.fields"
+                                data-ng-model="config.query" data-parent-form="editWidgetForm"
+                                data-enable-expression="(page==='dashboard' || page==='reporting')"
+                                data-show-uuid="true" data-form-name="'editWidgetForm'">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div data-ng-class="{ 'has-error': editWidgetForm['customModuleValue'].$invalid && editWidgetForm['customModuleValue'].$touched }">
+                            <label for="customModuleValue" class="control-label">Enter the key of object to be rendered.</label>
+                            <input name="customModuleValue" id="customModuleValue" type="text"
+                                data-ng-model="item.value" class="form-control"/>
+                        </div>
                     </div>
                 </div>
             </div>
