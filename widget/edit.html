@@ -62,16 +62,7 @@
                     </div>
                 </div>
                 <div data-ng-if="config.moduleType  == 1">
-                    <div
-                        data-ng-class="{ 'has-error': editWidgetForm.numberOfLayers.$invalid && editWidgetForm.numberOfLayers.$touched }">
-                        <label for="numberOfLayers" class="control-label">
-                            Select number of layers
-                            <span class="text-danger">*</span>
-                        </label>
-                        <select name="numberOfLayers" id="numberOfLayers" class="form-control" style="width:30%"
-                            data-ng-options="layer for layer in layers" data-ng-model="config.numberOfLayers" required>
-                            <option value="">Select an Option</option>
-                        </select>
+                    <div>
                         <div class="form-group"
                             data-ng-class="{ 'has-error': editWidgetForm.customModule.$invalid && editWidgetForm.customModule.$touched }">
                             <label for="customModule" class="control-label">
