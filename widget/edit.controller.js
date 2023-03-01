@@ -37,23 +37,23 @@
             $scope.fields = [];
             $scope.fieldsArray = [];
             $scope.config.picklistOrLookup = [];
+            $scope.config.jsonFields = [];
             var entity = new Entity($scope.config.module);
             entity.loadFields().then(function () {
                 if ($scope.config.moduleType === 0) {
                     for (var key in entity.fields) {
-                        if (entity.fields[key].type === "picklist" || entity.fields[key].type === "lookup") {
+                        if (entity.fi.elds[key].type === "picklist" || entity.fields[key].type === "lookup") {
                             $scope.config.picklistOrLookup.push(entity.fields[key]);
                         }
                     }
                 }
-                else{
+                else {
                     for (var key in entity.fields) {
                         if (entity.fields[key].type === "object") {
                             $scope.config.jsonFields.push(entity.fields[key]);
                         }
                     }
                 }
-
                 $scope.config.fields = entity.getFormFields();
                 angular.extend($scope.fields, entity.getRelationshipFields());
                 $scope.config.fieldsArray = entity.getFormFieldsArray();
@@ -70,6 +70,11 @@
         }
 
         function save() {
+            if ($scope.editWidgetForm.$invalid) {
+                $scope.editWidgetForm.$setTouched();
+                $scope.editWidgetForm.$focusOnFirstError();
+                return;
+            }
             $uibModalInstance.close($scope.config);
         }
 
