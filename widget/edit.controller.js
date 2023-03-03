@@ -57,7 +57,6 @@
                 $scope.config.fields = entity.getFormFields();
                 angular.extend($scope.fields, entity.getRelationshipFields());
                 $scope.config.fieldsArray = entity.getFormFieldsArray();
-                // loadPicklistFields();
             });
         }
 
