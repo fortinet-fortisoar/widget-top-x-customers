@@ -20,38 +20,41 @@
                 <label for="moduleType" class="control-label">Select Module Type</label><span
                     class="text-danger">*</span>
                 <select name="moduleType" id="moduleType" class="form-control" style="width:30%"
-                    data-ng-options="key as value for (key, value) in moduleType.type" data-ng-model="config.moduleType"
+                    data-ng-options="moduleType for moduleType in moduleType.type" data-ng-model="config.moduleType"
                     data-ng-change="onChangeModuleType()" required>
                     <option value="">Select an Option</option>
                 </select>
             </div>
 
             <div data-ng-if="config.moduleType !== undefined">
-                <div data-ng-if="config.moduleType  == 0">
-                    <div class="form-group" data-ng-if="modules"
-                        data-ng-class="{ 'has-error': editWidgetForm.module.$invalid && editWidgetForm.module.$touched }">
-                        <label for="module" class="control-label">Data Source
-                            <span class="text-danger">*</span>
-                        </label>
-                        <select name="module" id="module" class="form-control"
-                            data-ng-options="module.type as module.name for module in modules"
-                            data-ng-model="config.module" data-ng-change="onModuleChange()" required>
-                            <option value="">Select an Option</option>
-                        </select>
+                <div id="modulesDropdown" class="form-group" data-ng-if="modules"
+                    data-ng-class="{ 'has-error': editWidgetForm.module.$invalid && editWidgetForm.module.$touched }">
+                    <label for="module" class="control-label">Data Source
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select name="module" id="module" class="form-control"
+                        data-ng-options="module.type as module.name for module in modules" data-ng-model="config.module"
+                        data-ng-change="onModuleChange()" required>
+                        <option value="">Select an Option</option>
+                    </select>
+                </div>
+                <div id="filterForModule" class="margin-top-md margin-bottom-md"
+                    data-ng-if="config.module !== undefined">
+                    <label data-ng-if="config.moduleType  == 'Across Modules'" class="control-label">Filter Record
+                        <span class="text-danger">*</span>
+                    </label>
+                    <label data-ng-if="config.moduleType  == 'Single Module'"  class="control-label">Filter Record Which Contains Data
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div data-cs-conditional data-ng-if="config.fieldsArray.length > 0" data-fields="config.fields"
+                        data-reset-field="config.fields" data-ng-model="config.query" data-parent-form="editWidgetForm"
+                        data-enable-expression="(page==='dashboard' || page==='reporting')" data-show-uuid="true"
+                        data-form-name="'editWidgetForm'">
                     </div>
-                    <div class="margin-top-md margin-bottom-md" data-ng-if="config.module !== undefined">
-                        <label class="control-label">Filter Record
-                            <span class="text-danger">*</span>
-                        </label>
-                        <div data-cs-conditional data-ng-if="config.fieldsArray.length > 0" data-fields="config.fields"
-                            data-reset-field="config.fields" data-ng-model="config.query"
-                            data-parent-form="editWidgetForm"
-                            data-enable-expression="(page==='dashboard' || page==='reporting')" data-show-uuid="true"
-                            data-form-name="'editWidgetForm'">
-                        </div>
-                    </div>
-                    <div data-ng-if="config.module !== undefined">
-                        <label for="picklistOrLookup" class="control-label">Select Picklist Or loopup Field
+                </div>
+                <div data-ng-if="config.moduleType  == 'Across Modules'">
+                    <div id="displayPicklistOrLookup" data-ng-if="config.module !== undefined">
+                        <label for="picklistOrLookup" class="control-label">Select Picklist or Lookup Field
                             <span class="text-danger">*</span>
                         </label>
                         <select name="picklistOrLookup" id="picklistOrLookup" class="form-control"
@@ -61,41 +64,21 @@
                         </select>
                     </div>
                 </div>
-                <div data-ng-if="config.moduleType  == 1">
+                <div data-ng-if="config.moduleType  == 'Single Module'">
                     <div>
-                        <div class="form-group"
-                            data-ng-class="{ 'has-error': editWidgetForm.customModule.$invalid && editWidgetForm.customModule.$touched }">
-                            <label for="customModule" class="control-label">
-                                Data Source
-                                <span class="text-danger">*</span>
-                            </label>
-                            <select name="customModule" id="customModule" class="form-control"
-                                data-ng-options="module.type as module.name for module in modules"
-                                data-ng-model="config.module" data-ng-change="onModuleChange()" required>
-                                <option value="">Select an Option</option>
-                            </select>
-                        </div>
                         <div data-ng-if="config.module !== undefined">
-                            <div class="margin-top-md margin-bottom-md" data-ng-if="config.module !== undefined">
-                                <label class="control-label">Filter Record Which Contains Data
+                            <div id="customModuleFieldDiv">
+                                <label class="control-label">Select field for data source
                                     <span class="text-danger">*</span>
                                 </label>
-                                <div data-cs-conditional data-ng-if="config.fieldsArray.length > 0"
-                                    data-fields="config.fields" data-reset-field="config.fields"
-                                    data-ng-model="config.query" data-parent-form="editWidgetForm"
-                                    data-enable-expression="(page==='dashboard' || page==='reporting')"
-                                    data-show-uuid="true" data-form-name="'editWidgetForm'">
-                                </div>
+                                <select class="form-control"
+                                    data-ng-options="field.name as field.title for field in config.jsonFields"
+                                    data-ng-model="config.customModuleField" required>
+                                    <option value="">Select an Option</option>
+                                </select>
                             </div>
-                            <label class="control-label">Select field for data source
-                                <span class="text-danger">*</span>
-                            </label>
-                            <select class="form-control" data-ng-options="field.name as field.title for field in config.jsonFields"
-                                data-ng-model="config.customModuleField" required>
-                                <option value="">Select an Option</option>
-                            </select>
                         </div>
-                        <div>
+                        <div id='customModuleJsonValue'>
                             <label for="customModuleValue" class="control-label">Enter the key of object to be
                                 rendered.</label>
                             <input name="customModuleValue" id="customModuleValue" type="text"

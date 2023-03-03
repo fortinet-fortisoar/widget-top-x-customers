@@ -40,9 +40,9 @@
             $scope.config.jsonFields = [];
             var entity = new Entity($scope.config.module);
             entity.loadFields().then(function () {
-                if ($scope.config.moduleType === 0) {
+                if ($scope.config.moduleType === 'Across Modules') {
                     for (var key in entity.fields) {
-                        if (entity.fi.elds[key].type === "picklist" || entity.fields[key].type === "lookup") {
+                        if (entity.fields[key].type === "picklist" || entity.fields[key].type === "lookup") {
                             $scope.config.picklistOrLookup.push(entity.fields[key]);
                         }
                     }
