@@ -1,0 +1,98 @@
+<form data-ng-submit="save()" class="noMargin" name="editWidgetForm" data-ng-class="{'state-wait': processing }"
+    novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title col-md-9">Top 3 Edit View</h3>
+        <button type="button" class="close" data-ng-click="cancel()" data-dismiss="modal" aria-label="Close"
+            id="close-edit-widget-form-btn">
+            <div aria-hidden="true" class="version-button">+</div>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group"
+            data-ng-class="{ 'has-error': editWidgetForm.title.$invalid && editWidgetForm.title.$touched }">
+            <label for="title" class="control-label">Title<span class="text-danger">*</span></label> <input id="title"
+                name="title" type="text" data-ng-model="config.title" class="form-control" />
+            <div data-cs-messages="editWidgetForm.title"></div>
+        </div>
+        <div>
+            <div
+                data-ng-class="{ 'has-error': editWidgetForm.moduleType.$invalid && editWidgetForm.moduleType.$touched }">
+                <label for="moduleType" class="control-label">Select Module Type</label><span
+                    class="text-danger">*</span>
+                <select name="moduleType" id="moduleType" class="form-control" style="width:30%"
+                    data-ng-options="moduleType for moduleType in moduleType.type" data-ng-model="config.moduleType"
+                    data-ng-change="onChangeModuleType()" required>
+                    <option value="">Select an Option</option>
+                </select>
+            </div>
+
+            <div data-ng-if="config.moduleType !== undefined">
+                <div id="modulesDropdown" class="form-group" data-ng-if="modules"
+                    data-ng-class="{ 'has-error': editWidgetForm.module.$invalid && editWidgetForm.module.$touched }">
+                    <label for="module" class="control-label">Data Source
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select name="module" id="module" class="form-control"
+                        data-ng-options="module.type as module.name for module in modules" data-ng-model="config.module"
+                        data-ng-change="onModuleChange()" required>
+                        <option value="">Select an Option</option>
+                    </select>
+                </div>
+                <div id="filterForModule" class="margin-top-md margin-bottom-md"
+                    data-ng-if="config.module !== undefined">
+                    <label data-ng-if="config.moduleType  == 'Across Modules'" class="control-label">Filter Record
+                        <span class="text-danger">*</span>
+                    </label>
+                    <label data-ng-if="config.moduleType  == 'Single Module'"  class="control-label">Filter Record Which Contains Data
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div data-cs-conditional data-ng-if="config.fieldsArray.length > 0" data-fields="config.fields"
+                        data-reset-field="config.fields" data-ng-model="config.query" data-parent-form="editWidgetForm"
+                        data-enable-expression="(page==='dashboard' || page==='reporting')" data-show-uuid="true"
+                        data-form-name="'editWidgetForm'">
+                    </div>
+                </div>
+                <div data-ng-if="config.moduleType  == 'Across Modules'">
+                    <div id="displayPicklistOrLookup" data-ng-if="config.module !== undefined">
+                        <label for="picklistOrLookup" class="control-label">Select Picklist or Lookup Field
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select name="picklistOrLookup" id="picklistOrLookup" class="form-control"
+                            data-ng-options="picklist.name as picklist.title for picklist in config.picklistOrLookup"
+                            data-ng-model="config.groupByPicklistOrLookup" required>
+                            <option value="">Select an Option</option>
+                        </select>
+                    </div>
+                </div>
+                <div data-ng-if="config.moduleType  == 'Single Module'">
+                    <div>
+                        <div data-ng-if="config.module !== undefined">
+                            <div id="customModuleFieldDiv">
+                                <label class="control-label">Select field for data source
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control"
+                                    data-ng-options="field.name as field.title for field in config.jsonFields"
+                                    data-ng-model="config.customModuleField" required>
+                                    <option value="">Select an Option</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id='customModuleJsonValue'>
+                            <label for="customModuleValue" class="control-label">Enter the key of object to be
+                                rendered.</label>
+                            <input name="customModuleValue" id="customModuleValue" type="text"
+                                data-ng-model="config.keyForCustomModule" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="edit-widget-save" type="submit" class="btn btn-sm btn-primary"><i
+                class="icon icon-check margin-right-sm"></i>Save</button>
+        <button id="edit-widget-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i
+                class="icon icon-close margin-right-sm"></i>Close</button>
+    </div>
+</form>
